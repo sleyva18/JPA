@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2018-12-14 19:12:19.632
+-- Last modification date: 2018-12-14 23:11:32.348
 
 -- tables
 -- Table: ALUMNO
@@ -46,6 +46,14 @@ CREATE TABLE PROFESOR (
     DNIPROF char(8) NOT NULL,
     DIRPROF varchar(200) NOT NULL,
     CONSTRAINT PROFESOR_pk PRIMARY KEY (CODPROF)
+);
+
+-- Table: USUARIO
+CREATE TABLE USUARIO (
+    CODUSU int NOT NULL,
+    USUUSU varchar(100) NOT NULL,
+    PASUSU varchar(100) NOT NULL,
+    CONSTRAINT USUARIO_pk PRIMARY KEY (CODUSU)
 );
 
 -- foreign keys
