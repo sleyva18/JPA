@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesorCreateDlg" widgetVar="ProfesorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="NUEVO PROFESOR">
+            <h:form id="ProfesorCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
+                        <p:outputLabel value="Codigo:" for="codprof" />
+                        <p:inputText id="codprof" value="#{profesorController.selected.codprof}" required="true" requiredMessage="#{vista.CreateProfesorRequiredMessage_codprof}">
+                            <p:keyFilter regEx="/[0-9]/i"/>
+                        </p:inputText>
+                        <p:outputLabel value="Nombres Completos:" for="nomprof" />
+                        <p:inputText id="nomprof" value="#{profesorController.selected.nomprof}" maxlength="50" required="true" requiredMessage="#{vista.CreateProfesorRequiredMessage_nomprof}">
+                            <p:keyFilter regEx="/[a-zñÑ ]/i"/>
+                        </p:inputText>
+                        <p:outputLabel value="Apellidos Completos:" for="apeprof" />
+                        <p:inputText id="apeprof" value="#{profesorController.selected.apeprof}" maxlength="100" required="true" requiredMessage="#{vista.CreateProfesorRequiredMessage_apeprof}">
+                            <p:keyFilter regEx="/[a-zñÑ ]/i"/>
+                        </p:inputText>
+                        <p:outputLabel value="DNI:" for="dniprof" />
+                        <p:inputText id="dniprof" value="#{profesorController.selected.dniprof}" maxlength="8" required="true" requiredMessage="#{vista.CreateProfesorRequiredMessage_dniprof}">
+                         <p:keyFilter regEx="/[0-9]/i"/>
+                        </p:inputText>
+                        <p:outputLabel value="Dirección:" for="dirprof" />
+                        <p:inputText id="dirprof" value="#{profesorController.selected.dirprof}" maxlength="100" required="true" requiredMessage="#{vista.CreateProfesorRequiredMessage_dirprof}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{profesorController.create}" value="#{vista.Save}" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProfesorCreateDialog');"/>
+                    <p:commandButton value="#{vista.Cancel}" onclick="PF('ProfesorCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

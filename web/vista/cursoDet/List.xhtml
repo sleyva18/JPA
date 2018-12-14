@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Asignacion curso"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="CursoDetListForm">
+                <p:panel header="LISTADO DE ASIGNACIONES">
+                    <p:dataTable id="datalist" value="#{cursoDetController.items}" var="item"
+                                 selectionMode="single" selection="#{cursoDetController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.codcuredet}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+                        <f:facet name="header">
+                            <h:commandLink>
+                                <img src="../../resources/img/pdf.png" alt=""/>
+                                <p:dataExporter type="pdf" target="datalist" fileName="ListadoAsignacion" />
+                            </h:commandLink>
+                        </f:facet>
+                        <p:column headerText="CODIGO">
+                            <h:outputText value="#{item.codcuredet}"/>
+                        </p:column>
+                        <p:column headerText="PROFESOR">
+                            <h:outputText value="#{item.codprof.nomprof} #{item.codprof.apeprof}"/>
+                        </p:column>
+                        <p:column headerText="CURSO">
+                            <h:outputText value="#{item.codcur.nomcur}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{vista.Create}" actionListener="#{cursoDetController.prepareCreate}" update=":CursoDetCreateForm" oncomplete="PF('CursoDetCreateDialog').show()"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{vista.Edit}" update=":CursoDetEditForm" oncomplete="PF('CursoDetEditDialog').show()" disabled="#{empty cursoDetController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{vista.Delete}" actionListener="#{cursoDetController.destroy}" update=":growl,datalist" disabled="#{empty cursoDetController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

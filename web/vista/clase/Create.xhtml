@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClaseCreateDlg" widgetVar="ClaseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="ASIGNACION DE NOTAS Y ASISTENCIAS">
+            <h:form id="ClaseCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{claseController.selected != null}">
+                        <p:outputLabel value="Codigo:" for="codclas" />
+                        <p:inputText id="codclas" value="#{claseController.selected.codclas}" required="true" requiredMessage="#{vista.CreateClaseRequiredMessage_codclas}"/>
+                        <p:outputLabel value="Nota:" for="notaclas" />
+                        <p:inputNumber id="notaclas" minValue="0" maxValue="20" value="#{claseController.selected.notaclas}" required="true" requiredMessage="#{vista.CreateClaseRequiredMessage_notaclas}">
+                            <p:keyFilter regEx="/[0-9]/i"/>
+                        </p:inputNumber>
+                        <p:outputLabel value="Fecha:" for="fechclas" />
+                        <p:calendar id="fechclas" pattern="MM/dd/yyyy" value="#{claseController.selected.fechclas}" required="true" requiredMessage="#{vista.EditClaseRequiredMessage_fechclas}" showOn="button"/>
+                        <p:outputLabel value="Asistencia:" for="asisclas" />
+                        <p:selectOneMenu id="asisclas" value="#{claseController.selected.asisclas}" required="true" requiredMessage="#{vista.CreateClaseRequiredMessage_asisclas}">
+                            <f:selectItem itemLabel="Asistio" itemValue="A"/>
+                            <f:selectItem itemLabel="Falto" itemValue="F"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Curso:" for="codcuredet" />
+                        <p:selectOneMenu id="codcuredet" value="#{claseController.selected.codcuredet}" required="true" requiredMessage="#{vista.EditClaseRequiredMessage_codcuredet}">
+                            <f:selectItems value="#{cursoDetController.itemsAvailableSelectOne}"
+                                           var="codcuredetItem"
+                                           itemValue="#{codcuredetItem}" itemLabel="#{codcuredetItem.codcur.nomcur} / #{codcuredetItem.codprof.nomprof} #{codcuredetItem.codprof.apeprof}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Alumno:" for="codperAlu" />
+                        <p:selectOneMenu id="codperAlu" value="#{claseController.selected.codperAlu}" required="true" requiredMessage="#{vista.EditClaseRequiredMessage_codperAlu}">
+                            <f:selectItems value="#{alumnoController.itemsAvailableSelectOne}"
+                                           var="codperAluItem"
+                                           itemValue="#{codperAluItem}" itemLabel="#{codperAluItem.nomper} #{codperAluItem.apeper}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{claseController.create}" value="#{vista.Save}" update="display,:ClaseListForm:datalist,:growl" oncomplete="handleSubmit(args,'ClaseCreateDialog');"/>
+                    <p:commandButton value="#{vista.Cancel}" onclick="PF('ClaseCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
