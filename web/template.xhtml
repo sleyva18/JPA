@@ -20,13 +20,13 @@
                 <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{vista.Home}" outcome="/index" icon="ui-icon-home"/>
-                        <p:submenu label="#{vista.Maintenance}">
-                            <p:menuitem value="Alumno" outcome="/vista/alumno/List.xhtml" />
-                            <p:menuitem value="Clase" outcome="/vista/clase/List.xhtml" />
-                            <p:menuitem value="Curso" outcome="/vista/curso/List.xhtml" />
-                            <p:menuitem value="Asignacion curso" outcome="/vista/cursoDet/List.xhtml" />
-                            <p:menuitem value="Profesor" outcome="/vista/profesor/List.xhtml" />
-                        </p:submenu>
+                        <p:menuitem value="Alumno" outcome="/vista/alumno/List.xhtml" />
+                        <p:menuitem value="Alumno" outcome="/vista/alumno/List.xhtml" />
+                        <p:menuitem value="Clase" outcome="/vista/clase/List.xhtml" />
+                        <p:menuitem value="Curso" outcome="/vista/curso/List.xhtml" />
+                        <p:menuitem value="Asignacion curso" outcome="/vista/cursoDet/List.xhtml" />
+                        <p:menuitem value="Profesor" outcome="/vista/profesor/List.xhtml" />
+                        <p:menuitem value="Cerrar Sesión" actionListener="#{usuarioController.cerrarSesion()}"/>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

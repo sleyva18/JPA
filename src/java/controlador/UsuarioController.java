@@ -1,5 +1,6 @@
 package controlador;
 
+import java.io.IOException;
 import modelo.entidad.Usuario;
 import modelo.dao.UsuarioFacade;
 
@@ -23,17 +24,23 @@ public class UsuarioController implements Serializable {
 
     public String validar() throws Exception {
         FacesContext contex = FacesContext.getCurrentInstance();
-        Usuario u = ejbFacade.validarUsuario(usuario,contra);
+        Usuario u = ejbFacade.validarUsuario(usuario, contra);
         if (u != null) {
             contex.getExternalContext().redirect("faces/index.xhtml");
             contex.addMessage(null, new FacesMessage("Bienvenido" + u.getUsuusu()));
-
+            this.setContra("");
+            this.setUsuario("");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("usuario o contraseña incorrecta"));
             return "login";
         }
         contex.addMessage(null, new FacesMessage("error"));
         return null;
+    }
+
+    public void cerrarSesion() throws IOException {
+        FacesContext contex = FacesContext.getCurrentInstance();
+        contex.getExternalContext().redirect("faces/login.xhtml");
     }
 
     public UsuarioFacade getEjbFacade() {
