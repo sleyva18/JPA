@@ -32,6 +32,8 @@ public class UsuarioController implements Serializable {
             this.setUsuario("");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("usuario o contraseña incorrecta"));
+            this.setContra("");
+            this.setUsuario("");
             return "login";
         }
         contex.addMessage(null, new FacesMessage("error"));
