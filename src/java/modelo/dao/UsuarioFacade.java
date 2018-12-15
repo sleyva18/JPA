@@ -26,13 +26,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
 
-    public Usuario validarUsuario(String usuario,String contra) {
+    public Usuario validarUsuario(Usuario usuario) {
         Usuario user = null;
         String jpql = "SELECT u FROM Usuario u WHERE "
                 + "u.usuusu = :usuusu and u.pasusu = :pasusu";
         Query p = em.createQuery(jpql);
-        p.setParameter("usuusu", usuario);
-        p.setParameter("pasusu", contra);
+        p.setParameter("usuusu", usuario.getUsuusu());
+        p.setParameter("pasusu", usuario.getPasusu());
         List<Usuario> lstUsuario = p.getResultList();
         if (lstUsuario.size() > 0) {
             user = lstUsuario.get(0);

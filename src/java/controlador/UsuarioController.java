@@ -19,32 +19,46 @@ public class UsuarioController implements Serializable {
     @EJB
     private modelo.dao.UsuarioFacade ejbFacade;
     private List<Usuario> items = null;
-    private Usuario selected;
+    private Usuario selected = new Usuario();
     private String usuario, contra;
 
     public String validar() throws Exception {
         FacesContext contex = FacesContext.getCurrentInstance();
-        Usuario u = ejbFacade.validarUsuario(usuario, contra);
+        Usuario u = ejbFacade.validarUsuario(selected);
         if (u != null) {
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
             contex.getExternalContext().redirect("faces/index.xhtml");
-            contex.addMessage(null, new FacesMessage("Bienvenido" + u.getUsuusu()));
-            this.setContra("");
-            this.setUsuario("");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido" + u.getUsuusu()));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("usuario o contraseña incorrecta"));
-            this.setContra("");
-            this.setUsuario("");
-            return "login";
         }
         contex.addMessage(null, new FacesMessage("error"));
         return null;
     }
 
     public void cerrarSesion() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesContext contex = FacesContext.getCurrentInstance();
-        contex.getExternalContext().redirect("faces/login.xhtml");
+        contex.getExternalContext().redirect("/JPA");
     }
 
+    public static boolean _isLogin() {
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        return us != null;
+    }
+    
+    public void validarSesion() throws Exception {
+        if (!_isLogin()) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/JPA" );
+        }
+    }
+
+    public void validarLogin() throws Exception {
+        if (_isLogin()) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/JPA/index.xhtml");
+        }
+    }
+    
     public UsuarioFacade getEjbFacade() {
         return ejbFacade;
     }
